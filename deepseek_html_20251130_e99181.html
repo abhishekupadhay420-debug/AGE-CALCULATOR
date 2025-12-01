@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid #e0e0e0;
+    }
+
+    h1 {
+      color: #87e64b;
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: none;
+    }
+
+    .creator {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: bold;
+    }
+
+    .creator-text {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .creator-name {
+      background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 1.4em;
+      font-weight: bold;
+      padding: 5px 15px;
+      border-radius: 10px;
+      display: inline-block;
+      animation: glow 2s ease-in-out infinite alternate;
+      text-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+    }
+
+    .input-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .date-selectors {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    select:hover {
+      border-color: #007bff;
+    }
+
+    select option {
+      background: white;
+      color: #333;
+      padding: 10px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+    }
+
+    .results {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .result-item {
+      margin: 15px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      color: #333;
+      border: 1px solid #e0e0e0;
+    }
+
+    .result-label {
+      color: #007bff;
+      font-size: 1.1em;
+      margin-bottom: 5px;
+    }
+
+    .result-value {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    #secondsDisplay {
+      color: #007bff;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px rgba(255, 107, 107, 0.5),
+                     0 0 10px rgba(78, 205, 196, 0.3),
+                     0 0 15px rgba(69, 183, 209, 0.2);
+      }
+      to {
+        text-shadow: 0 0 10px rgba(255, 107, 107, 0.8),
+                     0 0 20px rgba(78, 205, 196, 0.5),
+                     0 0 30px rgba(69, 183, 209, 0.3);
+      }
+    }
+
+    @keyframes pulse {
+      from { text-shadow: 0 0 5px rgba(0, 123, 255, 0.3); }
+      to { text-shadow: 0 0 15px rgba(0, 123, 255, 0.3); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AGE CALCULATOR</h1>
+    <div class="creator">
+      <div class="creator-text">Created by</div>
+      <div class="creator-name">हसन कमाल (Hasan Kamal)</div>
+    </div>
+    
+    <div class="input-section">
+      <div class="date-selectors">
+        <select id="day">
+          <option value="">Day</option>
+          <!-- Days will be populated by JS -->
+        </select>
+        <select id="month">
+          <option value="">Month</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+        <select id="year">
+          <option value="">Year</option>
+          <!-- Years will be populated by JS -->
+        </select>
+      </div>
+      <button onclick="calculateAge()">Calculate Age</button>
+    </div>
+
+    <div class="results">
+      <div class="result-item">
+        <div class="result-label">Age</div>
+        <div class="result-value" id="yearsDisplay">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Months</div>
+        <div class="result-value" id="monthsDisplay">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Weeks</div>
+        <div class="result-value" id="weeksDisplay">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Days</div>
+        <div class="result-value" id="daysDisplay">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Hours</div>
+        <div class="result-value" id="hoursDisplay">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Minutes</div>
+        <div class="result-value" id="minutesDisplay">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Seconds</div>
+        <div class="result-value" id="secondsDisplay">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Days to Next Birthday</div>
+        <div class="result-value" id="nextBirthday">-</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Populate days and years
+    const daySelect = document.getElementById('day');
+    const yearSelect = document.getElementById('year');
+
+    // Populate days (1-31)
+    for (let i = 1; i <= 31; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      daySelect.appendChild(option);
+    }
+
+    // Populate years (1900-current year)
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i >= 1900; i--) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      yearSelect.appendChild(option);
+    }
+
+    let updateInterval;
+
+    function calculateAge() {
+      const day = document.getElementById('day').value;
+      const month = document.getElementById('month').value;
+      const year = document.getElementById('year').value;
+
+      if (!day || !month || !year) {
+        alert('Please select a complete date.');
+        return;
+      }
+
+      const dob = new Date(year, month, day);
+      if (dob == "Invalid Date") {
+        alert('Invalid date selected.');
+        return;
+      }
+
+      if (updateInterval) clearInterval(updateInterval);
+      updateInterval = setInterval(() => updateAge(dob), 1000);
+      updateAge(dob);
+    }
+
+    function updateAge(dob) {
+      const now = new Date();
+      const diff = now - dob;
+
+      // Basic calculations
+      const secondsTotal = Math.floor(diff / 1000);
+      const minutesTotal = Math.floor(secondsTotal / 60);
+      const hoursTotal = Math.floor(minutesTotal / 60);
+      const daysTotal = Math.floor(hoursTotal / 24);
+      const weeksTotal = Math.floor(daysTotal / 7);
+
+      // Detailed age breakdown
+      let years = now.getFullYear() - dob.getFullYear();
+      let months = now.getMonth() - dob.getMonth();
+      let days = now.getDate() - dob.getDate();
+
+      if (days < 0) {
+        months--;
+        const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        days = lastDayOfMonth - dob.getDate() + now.getDate();
+      }
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      // Next birthday calculation
+      const nextBirthday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+      if (now > nextBirthday) {
+        nextBirthday.setFullYear(now.getFullYear() + 1);
+      }
+      const daysToBirthday = Math.ceil((nextBirthday - now) / (1000 * 60 * 60 * 24));
+
+      // Update displays
+      document.getElementById('yearsDisplay').textContent =
+        `${years} years ${months} months ${days} days`;
+      document.getElementById('monthsDisplay').textContent =
+        (years * 12 + months).toLocaleString();
+      document.getElementById('weeksDisplay').textContent =
+        weeksTotal.toLocaleString();
+      document.getElementById('daysDisplay').textContent =
+        daysTotal.toLocaleString();
+      document.getElementById('hoursDisplay').textContent =
+        (daysTotal * 24).toLocaleString();
+      document.getElementById('minutesDisplay').textContent =
+        (daysTotal * 24 * 60).toLocaleString();
+      document.getElementById('secondsDisplay').textContent =
+        (daysTotal * 24 * 60 * 60 + now.getSeconds()).toLocaleString();
+      document.getElementById('nextBirthday').textContent = daysToBirthday;
+    }
+  </script>
+</body>
+</html>
